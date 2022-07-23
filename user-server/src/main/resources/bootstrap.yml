@@ -1,0 +1,31 @@
+server:
+  port: 8002
+spring:
+  # 服务名称
+  application:
+    name: user-server
+  main:
+    allow-bean-definition-overriding: true #当遇到同样名字的时候，是否允许覆盖注册
+  cloud:
+    nacos:
+      discovery:
+#        server-addr: http://172.16.18.12:8848
+        server-addr: http://192.168.126.128:8848
+        namespace: 0738c20f-aed9-407a-bfe5-782e03b52506
+        group: DEV_YML_GROUP
+        # 配置中心
+      config:
+        server-addr: ${spring.cloud.nacos.discovery.server-addr}
+        namespace: ${spring.cloud.nacos.discovery.namespace}
+        group: ${spring.cloud.nacos.discovery.group}
+        # 设置配置文件yml 格式
+        file-extension: yml
+        # 公共配置文件共享
+        extension-configs:
+          - data-id:  application-${spring.profiles.active}.${spring.cloud.nacos.config.file-extension}
+            group: ${spring.cloud.nacos.discovery.group}
+            refresh: true
+
+  # 项目开发模式
+  profiles:
+    active: dev

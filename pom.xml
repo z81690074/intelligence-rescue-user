@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.aojun</groupId>
+    <artifactId>intelligence-rescue-user</artifactId>
+    <packaging>pom</packaging>
+    <version>0.0.1-SNAPSHOT</version>
+    <name>intelligence-rescue-user</name>
+    <description>intelligence-rescue-user</description>
+    <modules>
+        <module>user-api</module>
+        <module>user-server</module>
+    </modules>
+
+    <properties>
+
+        <spring-boot.version>2.2.6.RELEASE</spring-boot.version>
+        <spring-cloud.version>Hoxton.SR3</spring-cloud.version>
+        <spring-cloud-alibaba.version>2.2.1.RELEASE</spring-cloud-alibaba.version>
+        <mybatis-plus.version>3.3.2</mybatis-plus.version>
+        <mysql.version>8.0.19</mysql.version>
+        <alibaba-druid.version>1.1.21</alibaba-druid.version>
+        <hutool.version>5.3.8</hutool.version>
+        <poi.version>4.1.2</poi.version>
+        <xerces.version>2.12.0</xerces.version>
+        <quartz.version>2.3.2</quartz.version>
+        <kaptcha.version>0.0.9</kaptcha.version>
+        <fastjson.version>1.2.72</fastjson.version>
+        <security.oauth.version>2.3.6.RELEASE</security.oauth.version>
+        <security.jwt.version>1.0.10.RELEASE</security.jwt.version>
+        <swagger.version>1.5.21</swagger.version>
+        <swagger.fox.version>2.9.2</swagger.fox.version>
+        <knife4j.version>2.0.2</knife4j.version>
+        <json-lib.version>2.4</json-lib.version>
+        <xom.version>1.2.10</xom.version>
+        <dom4j.version>1.6</dom4j.version>
+        <httpclient.version>4.5.12</httpclient.version>
+        <httpmime.version>4.5.12</httpmime.version>
+        <mail.version>1.6.2</mail.version>
+        <jsch.version>0.1.55</jsch.version>
+        <emoji-java.version>5.1.1</emoji-java.version>
+        <net.version>3.6</net.version>
+        <zxing.version>3.4.0</zxing.version>
+        <xml-apis.version>1.4.01</xml-apis.version>
+        <junit.version>4.13</junit.version>
+        <json-path-assert.version>2.2.0</json-path-assert.version>
+        <jedis.version>3.3.0</jedis.version>
+        <redisson.version>3.12.4</redisson.version>
+        <jwt.version>0.9.1</jwt.version>
+        <pdfbox.version>2.0.20</pdfbox.version>
+        <icepdf-core.version>6.2.2</icepdf-core.version>
+        <aliyun-core.version>4.4.1</aliyun-core.version>
+        <aliyun-dysmsapi.version>1.1.0</aliyun-dysmsapi.version>
+        <alipay-sdk.version>4.10.87.ALL</alipay-sdk.version>
+        <jdom.version>2.0.2</jdom.version>
+    </properties>
+
+    <dependencies>
+
+        <!--配置文件处理器-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
+            <optional>true</optional>
+        </dependency>
+
+        <!--监控-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+
+        <!--断路器依赖-->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-netflix-hystrix</artifactId>
+        </dependency>
+
+        <!--测试依赖-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+        </dependency>
+
+        <!-- 全局单元测试 -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>${junit.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+    </dependencies>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${spring-boot.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring-cloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <!--spring cloud alibaba-->
+            <dependency>
+                <groupId>com.alibaba.cloud</groupId>
+                <artifactId>spring-cloud-alibaba-dependencies</artifactId>
+                <version>${spring-cloud-alibaba.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>${spring-boot.version}</version>
+            </plugin>
+        </plugins>
+    </build>
+    <repositories>
+        <!--阿里云主仓库，代理了maven central和jcenter仓库-->
+        <repository>
+            <id>aliyun</id>
+            <name>aliyun</name>
+            <url>https://maven.aliyun.com/repository/public</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
+
+</project>

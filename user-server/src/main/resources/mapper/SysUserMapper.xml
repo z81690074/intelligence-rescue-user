@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.aojun.user.server.mapper.SysUserMapper">
+
+    <select id="getUserInfoById" resultType="com.aojun.user.api.entity.SysUser">
+        SELECT
+            u.user_id,
+            u.username,
+            u.realname,
+            u.sex,
+            u.mobile,
+            u.`status`,
+            ut.biz_ids,
+            ut.biz_names
+        FROM
+            sys_user u
+        INNER JOIN sys_user_tenant ut ON u.user_id = ut.user_id
+        where u.user_id =#{userId}
+    </select>
+
+    <select id="setRegistrationId"  resultType="boolean">
+        update sys_user
+            set registration_id = #{registrationId}
+        where user_id =#{userId}
+    </select>
+
+
+</mapper>
