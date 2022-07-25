@@ -10,10 +10,10 @@ import java.util.Set;
  */
 public interface SysUserRoleService extends IService<SysUserRole> {
 
-    void saveUserRoleIds(Long userId, Set<Long> roleIds);
+    void saveUserRoleIds(Integer userId, Set<Integer> roleIds);
 
     /**
      * 根据用户ID，获取角色ID列表
      */
-    Set<Long> queryRoleIdList(Long userId);
+    Set<Integer> queryRoleIdList(Integer userId);
 }

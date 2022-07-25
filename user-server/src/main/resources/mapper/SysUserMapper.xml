@@ -10,9 +10,7 @@
             u.realname,
             u.sex,
             u.mobile,
-            u.`status`,
-            ut.biz_ids,
-            ut.biz_names
+            u.`status`
         FROM
             sys_user u
         INNER JOIN sys_user_tenant ut ON u.user_id = ut.user_id

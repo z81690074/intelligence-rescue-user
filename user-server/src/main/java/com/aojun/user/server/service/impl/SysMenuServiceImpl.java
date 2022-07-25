@@ -22,7 +22,7 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
     private SysUserRoleMapper sysUserRoleMapper;
 
     @Override
-    public List<SysMenu> queryListParentId(Long parentId, List<Long> menuIdList) {
+    public List<SysMenu> queryListParentId(Integer parentId, List<Integer> menuIdList) {
         List<SysMenu> menuList = this.list(new QueryWrapper<SysMenu>().eq("parent_id", parentId));
         if (menuIdList == null) {
             return menuList;
@@ -38,19 +38,19 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
 
 
     @Override
-    public List<SysMenu> getUserMenuList(Long userId) {
+    public List<SysMenu> getUserMenuList(Integer userId) {
         //系统管理员，拥有最高权限
         if (userId.equals("admin")) {
             return getAllMenuList(null);
         }
 
         //用户菜单列表
-        List<Long> menuIdList = sysUserRoleMapper.queryAllMenuId(userId);
+        List<Integer> menuIdList = sysUserRoleMapper.queryAllMenuId(userId);
         return getAllMenuList(menuIdList);
     }
 
     @Override
-    public Set<String> getUserPermissions(Long userId) {
+    public Set<String> getUserPermissions(Integer userId) {
         List<String> permsList;
 
         //系统管理员，拥有最高权限
@@ -77,9 +77,9 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
     /**
      * 获取所有菜单列表
      */
-    private List<SysMenu> getAllMenuList(List<Long> menuIdList) {
+    private List<SysMenu> getAllMenuList(List<Integer> menuIdList) {
         //查询根菜单列表
-        List<SysMenu> menuList = queryListParentId((long) 0, menuIdList);
+        List<SysMenu> menuList = queryListParentId((Integer) 0, menuIdList);
         //递归获取子菜单
         getMenuTreeList(menuList, menuIdList);
 
@@ -89,7 +89,7 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
     /**
      * 递归
      */
-    private List<SysMenu> getMenuTreeList(List<SysMenu> menuList, List<Long> menuIdList) {
+    private List<SysMenu> getMenuTreeList(List<SysMenu> menuList, List<Integer> menuIdList) {
         List<SysMenu> subMenuList = new ArrayList<>();
 
         for (SysMenu entity : menuList) {

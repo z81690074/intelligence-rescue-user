@@ -103,41 +103,13 @@ public class SysLoginController {
         return loginAccount(loginForm);
     }
 
-    /**
-     * 登录
-     *
-     * @param loginForm
-     * @return
-     */
-    @PostMapping("/authlogin")
-    @ApiOperation("授权登录")
-    public Result authlogin(@RequestBody SysLoginForm loginForm) {
-        // 验证手机验证码是否正确
-        String key = Constant.PHONE_KEY + loginForm.getMobile();
-        if (StrUtil.isNotBlank(loginForm.getMobileCode()) && redisUtils.hasKey(key)) {
-            String code = redisUtils.get(key);
-            redisUtils.delete(key);
-            if (!code.equals(loginForm.getMobileCode())) {
-                return Result.failed("手机验证码输入错误");
-            }
-        } else {
-            return Result.failed("手机验证码错误");
-        }
-
-        return Result.failed("该电脑尚未授权，请联系账户管理员授权通过，方可登录");
+    @PostMapping("/logout")
+    @ApiOperation("注销")
+    public Result logout(String username){
+        //删除redis。
+        redisUtils.del(username);
+        return Result.ok();
     }
-
-    /**
-     * 判断账号是不是存在，若存在，判断该账号 是否授权
-     */
-    @GetMapping("/validateUserAuth")
-    @ApiOperation("判断账号是否授权接口")
-    public Result validateUserAuth(@RequestParam("username") String username) {
-        SysUser sysUser = sysUserService.getOne(new QueryWrapper<SysUser>().eq(StringUtils.isNotBlank(username), "username", username));
-        if (sysUser == null) return Result.failed("用户名错误");
-        return Result.ok(sysUser);
-    }
-
 
     /**
      * 鉴权登录

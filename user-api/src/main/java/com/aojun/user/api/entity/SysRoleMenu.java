@@ -11,8 +11,6 @@ import lombok.EqualsAndHashCode;
 /**
  * 角色与菜单对应关系
  *
- * @author liu jian
- * @date 2020-05-26 13:03:22
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
@@ -22,16 +20,16 @@ public class SysRoleMenu extends Model<SysRoleMenu> {
     /**
      * 主键id
      */
-    @TableId(value = "id",type = IdType.ASSIGN_ID)
-    private Long id;
+    @TableId(value = "id")
+    private Integer id;
 
     /**
      * 角色ID
      */
-    private Long roleId;
+    private Integer roleId;
     /**
      * 菜单ID
      */
-    private Long menuId;
+    private Integer menuId;
 
 }

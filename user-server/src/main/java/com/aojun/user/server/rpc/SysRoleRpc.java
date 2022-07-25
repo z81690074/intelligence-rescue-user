@@ -19,7 +19,7 @@ public class SysRoleRpc {
 
 
     @GetMapping("/queryMenuIdListByRoleIds")
-    List<String> queryMenuIdListByRoleIds(@RequestParam("roleIds") List<Long> roleIds) {
+    List<String> queryMenuIdListByRoleIds(@RequestParam("roleIds") List<Integer> roleIds) {
         return sysRoleMenuMapper.queryMenuIdListByRoleIds(roleIds);
     }
 

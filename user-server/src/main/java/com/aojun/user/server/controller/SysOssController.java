@@ -45,7 +45,7 @@ public class SysOssController {
      */
     @GetMapping("/getById/{id}")
     @ApiOperation("通过id查询单条记录")
-    public Result<SysOss> getById(@PathVariable("id") Long id) {
+    public Result<SysOss> getById(@PathVariable("id") Integer id) {
         return Result.ok(sysOssService.getById(id));
     }
 
@@ -94,7 +94,7 @@ public class SysOssController {
      */
     @DeleteMapping("/removeById/{id}")
     @ApiOperation("通过id删除单条记录")
-    public Result removeById(@PathVariable Long id) {
+    public Result removeById(@PathVariable Integer id) {
         return Result.ok(sysOssService.removeById(id));
     }
 

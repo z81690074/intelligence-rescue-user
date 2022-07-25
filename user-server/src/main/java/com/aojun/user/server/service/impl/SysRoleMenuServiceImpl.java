@@ -26,7 +26,7 @@ public class SysRoleMenuServiceImpl extends ServiceImpl<SysRoleMenuMapper, SysRo
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void saveRoleMenu(Long roleId, Set<Long> menuIdList) {
+    public void saveRoleMenu(Integer roleId, Set<Integer> menuIdList) {
         //先删除角色与菜单关系
         sysRoleMenuMapper.delete(new QueryWrapper<SysRoleMenu>().eq("role_id",roleId));
 
@@ -36,7 +36,7 @@ public class SysRoleMenuServiceImpl extends ServiceImpl<SysRoleMenuMapper, SysRo
 
         //保存角色与菜单关系
         List<SysRoleMenu> list = new ArrayList<>(menuIdList.size());
-        for (Long menuId : menuIdList) {
+        for (Integer menuId : menuIdList) {
             SysRoleMenu sysRoleMenu = new SysRoleMenu();
             sysRoleMenu.setMenuId(menuId);
             sysRoleMenu.setRoleId(roleId);

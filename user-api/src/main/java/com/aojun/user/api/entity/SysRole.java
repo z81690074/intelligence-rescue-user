@@ -12,8 +12,6 @@ import java.util.Set;
 /**
  * 角色
  *
- * @author liu jian
- * @date 2020-05-26 13:03:22
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
@@ -23,8 +21,8 @@ public class SysRole extends Model<SysRole>{
     /**
      * 角色id
      */
-    @TableId(value = "role_id",type = IdType.ASSIGN_ID)
-    private Long roleId;
+    @TableId(value = "role_id")
+    private Integer roleId;
     /**
      * 角色名称
      */
@@ -44,7 +42,7 @@ public class SysRole extends Model<SysRole>{
     /**
      * 创建人
      */
-    private Long createBy;
+    private Integer createBy;
     /**
      * 更新时间
      */
@@ -52,7 +50,7 @@ public class SysRole extends Model<SysRole>{
     /**
      * 更新人
      */
-    private Long updateBy;
+    private Integer updateBy;
 
     /**
      * 删除状态 0：正常 ，1：删除
@@ -64,6 +62,6 @@ public class SysRole extends Model<SysRole>{
      * 角色菜单列表
      */
     @TableField(exist = false)
-    private Set<Long> MenuIdList;
+    private Set<Integer> MenuIdList;
 
 }

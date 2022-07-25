@@ -3,7 +3,7 @@
 
 <mapper namespace="com.aojun.user.server.mapper.SysUserRoleMapper">
 
-    <select id="queryRoleIdList" resultType="java.lang.Long">
+    <select id="queryRoleIdList" resultType="java.lang.Integer">
         select role_id from sys_user_role where user_id = #{userId}
     </select>
 
@@ -16,7 +16,7 @@
     </select>
 
     <!-- 查询用户的所有菜单ID -->
-    <select id="queryAllMenuId" resultType="long">
+    <select id="queryAllMenuId" resultType="Integer">
         select distinct rm.menu_id from sys_user_role ur
         LEFT JOIN sys_role_menu rm on ur.role_id = rm.role_id
         where ur.user_id = #{userId}

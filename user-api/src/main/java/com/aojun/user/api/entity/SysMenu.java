@@ -14,8 +14,6 @@ import java.util.List;
 /**
  * 菜单管理
  *
- * @author liu jian
- * @date 2020-05-26 13:03:22
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
@@ -25,12 +23,12 @@ public class SysMenu extends Model<SysMenu> {
     /**
      * 主键id
      */
-    @TableId(value = "menu_id",type = IdType.ASSIGN_ID)
-    private Long menuId;
+    @TableId(value = "menu_id")
+    private Integer menuId;
     /**
      * 父菜单ID，一级菜单为0
      */
-    private Long parentId;
+    private Integer parentId;
     /**
      * 菜单名称
      */

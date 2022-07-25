@@ -30,7 +30,7 @@ public class SysRoleController  {
      * @param params 对象
      * @return
      */
-    @PostMapping("/list")
+    @GetMapping("/list")
     @ApiOperation("分页list")
     public Result getSysRolePage(@RequestBody Map<String,Object> params) {
         return Result.ok(sysRoleService.getSysRolePage(params));
@@ -45,7 +45,7 @@ public class SysRoleController  {
      */
     @GetMapping("/getById/{roleId}")
     @ApiOperation("通过id查询单条记录")
-    public Result getByRoleId(@PathVariable("roleId") Long roleId) {
+    public Result getByRoleId(@PathVariable("roleId") Integer roleId) {
         return sysRoleService.getByRoleId(roleId);
     }
 
@@ -82,7 +82,7 @@ public class SysRoleController  {
      */
     @DeleteMapping("/removeById/{roleId}")
     @ApiOperation("通过id删除单条记录")
-    public Result removeById(@PathVariable Long roleId) {
+    public Result removeById(@PathVariable Integer roleId) {
         return Result.ok(sysRoleService.removeById(roleId));
     }
 

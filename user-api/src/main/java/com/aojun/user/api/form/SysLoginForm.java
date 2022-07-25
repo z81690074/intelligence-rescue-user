@@ -9,9 +9,6 @@ import java.io.Serializable;
 
 /**
  * 登录表单
- *
- * @author liujian
- * @since 2.0.0 2018-10-25
  */
 @Getter
 @Setter
@@ -27,9 +24,8 @@ public class SysLoginForm implements Serializable {
     private String realname;
     private String macAddress;
     private String mobileCode;// 手机验证码
-    private Long usrMacId;// 用户授权id
     private String openId;
-    private Long userId;
+    private Integer userId;
     private String ipAddress;
 
 

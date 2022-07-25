@@ -47,7 +47,7 @@ public class SysUserRpc {
         //获取用户权限
 //        Set<String> permiss = sysMenuService.getUserPermissions(sysUser.getUserId());
         //获取当前角色list
-        Set<Long> roleIdList = sysUserRoleService.queryRoleIdList(sysUser.getUserId());
+        Set<Integer> roleIdList = sysUserRoleService.queryRoleIdList(sysUser.getUserId());
         //获取角色名称
         Set<String> roleNamesList = sysUserRoleMapper.queryRoleEnglishNamesList(sysUser.getUserId());
         userInfo.setRoleEnglishNames(roleNamesList);
@@ -56,7 +56,7 @@ public class SysUserRpc {
 //            userInfo.setPermissions(ArrayUtil.toArray(permiss, String.class));
 //        }
         if (!CollectionUtils.isEmpty(roleIdList)) {
-            userInfo.setRoles(ArrayUtil.toArray(roleIdList, Long.class));
+            userInfo.setRoles(ArrayUtil.toArray(roleIdList, Integer.class));
         }
         return Result.ok(userInfo);
     }

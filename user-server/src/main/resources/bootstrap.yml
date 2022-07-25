@@ -9,8 +9,8 @@ spring:
   cloud:
     nacos:
       discovery:
-#        server-addr: http://172.16.18.12:8848
-        server-addr: http://192.168.126.128:8848
+        server-addr: http://172.16.18.12:8848
+#        server-addr: http://192.168.126.128:8848
         namespace: 0738c20f-aed9-407a-bfe5-782e03b52506
         group: DEV_YML_GROUP
         # 配置中心

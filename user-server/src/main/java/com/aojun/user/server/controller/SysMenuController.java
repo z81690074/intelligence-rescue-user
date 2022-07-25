@@ -86,9 +86,9 @@ public class SysMenuController {
 
         //添加顶级菜单
         SysMenu root = new SysMenu();
-        root.setMenuId((long) 0);
+        root.setMenuId(0);
         root.setName("根节点");
-        root.setParentId((long) -1);
+        root.setParentId(-1);
         root.setOpen(true);
         menuList.add(root);
         return Result.ok(menuList);
@@ -103,7 +103,7 @@ public class SysMenuController {
      */
     @GetMapping("/getById/{menuId}")
     @ApiOperation("通过id查询单条记录")
-    public Result<SysMenu> getById(@PathVariable("menuId") Long menuId) {
+    public Result<SysMenu> getById(@PathVariable("menuId") Integer menuId) {
         return Result.ok(sysMenuService.getById(menuId));
     }
 
@@ -141,7 +141,7 @@ public class SysMenuController {
      */
     @DeleteMapping("/removeById/{menuId}")
     @ApiOperation("通过id删除单条记录")
-    public Result removeById(@PathVariable("menuId") Long menuId) {
+    public Result removeById(@PathVariable("menuId") Integer menuId) {
         return Result.ok(sysMenuService.removeById(menuId));
     }
 

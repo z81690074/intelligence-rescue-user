@@ -14,12 +14,12 @@ public interface SysMenuService extends IService<SysMenu> {
     /**
      * 获取用户菜单列表
      */
-    List<SysMenu> getUserMenuList(Long userId);
+    List<SysMenu> getUserMenuList(Integer userId);
 
     /**
      * 获取用户权限列表
      */
-    Set<String> getUserPermissions(Long userId);
+    Set<String> getUserPermissions(Integer userId);
 
     /**
      * 根据父菜单，查询子菜单
@@ -27,6 +27,6 @@ public interface SysMenuService extends IService<SysMenu> {
      * @param parentId   父菜单ID
      * @param menuIdList 用户菜单ID
      */
-    List<SysMenu> queryListParentId(Long parentId, List<Long> menuIdList);
+    List<SysMenu> queryListParentId(Integer parentId, List<Integer> menuIdList);
 
 }

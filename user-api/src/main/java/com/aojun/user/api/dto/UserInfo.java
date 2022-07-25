@@ -22,31 +22,12 @@ public class UserInfo implements Serializable {
     /**
      * 角色集合
      */
-    private Long[] roles;
+    private Integer[] roles;
 
     /**
      * 角色英文名称
      */
     private Set<String> roleEnglishNames;
-
-    /**
-     * 商户ids
-     */
-    private Set<Long> bizIds;
-    /**
-     * 渠道商ids
-     */
-    private Set<Long> agentIds;
-
-    /**
-     * 企业id
-     */
-    private Long bizId;
-
-    /**
-     * 渠道商id
-     */
-    private Long agentId;
 
     /**
      * 头像

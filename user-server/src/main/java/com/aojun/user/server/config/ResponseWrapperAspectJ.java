@@ -40,7 +40,15 @@ public class ResponseWrapperAspectJ {
 
     }
 
-    @Around(value = "restControllerPointcut() || anyControllerMethodPointcut() || feignClientPointcut()")
+    /**
+     * 不拦截的方法
+     */
+    @Pointcut(value = "!execution(* com.aojun.user.server.controller.SysLoginController.captcha(..))")
+    public void NoPointCut(){
+
+    }
+
+    @Around(value = "(restControllerPointcut() || anyControllerMethodPointcut() || feignClientPointcut()) && NoPointCut()")
     public Object processAround(ProceedingJoinPoint jp) throws Throwable {
         HttpServletRequest request = ((ServletRequestAttributes) Objects
                 .requireNonNull(RequestContextHolder.getRequestAttributes())).getRequest();

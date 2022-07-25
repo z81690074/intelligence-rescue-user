@@ -17,7 +17,7 @@ import java.util.Set;
 public class SysUserRoleServiceImpl extends ServiceImpl<SysUserRoleMapper, SysUserRole> implements SysUserRoleService {
 
     @Override
-    public void saveUserRoleIds(Long userId, Set<Long> roleIds) {
+    public void saveUserRoleIds(Integer userId, Set<Integer> roleIds) {
         //先删除用户与角色关系
         this.removeByMap(new MapUtils().put("user_id", userId));
 
@@ -33,7 +33,7 @@ public class SysUserRoleServiceImpl extends ServiceImpl<SysUserRoleMapper, SysUs
     }
 
     @Override
-    public Set<Long> queryRoleIdList(Long userId) {
+    public Set<Integer> queryRoleIdList(Integer userId) {
         return baseMapper.queryRoleIdList(userId);
     }
 

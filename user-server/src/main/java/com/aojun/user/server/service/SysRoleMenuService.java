@@ -10,6 +10,6 @@ import java.util.Set;
  */
 public interface SysRoleMenuService extends IService<SysRoleMenu> {
 
-    void saveRoleMenu(Long roleId, Set<Long> menuIdList);
+    void saveRoleMenu(Integer roleId, Set<Integer> menuIdList);
 
 }

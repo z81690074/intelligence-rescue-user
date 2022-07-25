@@ -13,8 +13,6 @@ import java.util.Date;
 /**
  * 文件上传
  *
- * @author liu jian
- * @date 2020-05-26 13:03:22
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
@@ -24,8 +22,8 @@ public class SysOss extends Model<SysOss> {
     /**
      *
      */
-    @TableId(value = "id",type = IdType.ASSIGN_ID)
-    private Long id;
+    @TableId(value = "id")
+    private Integer id;
     /**
      * URL地址
      */
@@ -37,7 +35,7 @@ public class SysOss extends Model<SysOss> {
     /**
      * 创建人
      */
-    private Long userId;
+    private Integer userId;
     /**
      * 高
      */

@@ -16,14 +16,14 @@ public interface UserRoleClient {
      * 根据角色ID，获取菜单ID列表
      */
     @GetMapping("/rpc/role/queryMenuIdListByRoleIds")
-    List<String> queryMenuIdListByRoleIds(@RequestParam("roleIds") List<Long> roleIds);
+    List<String> queryMenuIdListByRoleIds(@RequestParam("roleIds") List<Integer> roleIds);
 
     @Component
     @Slf4j
     class SysUserRoleClientFallback implements UserRoleClient {
 
         @Override
-        public List<String> queryMenuIdListByRoleIds(List<Long> roleIds) {
+        public List<String> queryMenuIdListByRoleIds(List<Integer> roleIds) {
             log.error("调用服务: {}, 资源: {}异常", "system-module", "/rpc/role/queryMenuIdListByRoleIds");
             return null;
         }

@@ -8,10 +8,6 @@ import com.baomidou.mybatisplus.extension.activerecord.Model;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-/**
- * @author liu jian
- * @date 2020-05-26 13:03:22
- */
 @Data
 @EqualsAndHashCode(callSuper = true)
 @TableName("oauth_client_details")

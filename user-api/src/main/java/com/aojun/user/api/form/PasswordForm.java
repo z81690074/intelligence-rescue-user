@@ -12,6 +12,9 @@ import javax.validation.constraints.NotNull;
  */
 @Data
 public class PasswordForm {
+
+    private Integer userId;
+
     /**
      * 原密码
      */

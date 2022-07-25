@@ -20,8 +20,8 @@ import java.util.Date;
 @TableName("sys_third_sign")
 public class SysThirdSign extends Model<SysThirdSign> {
 
-    @TableId(value = "id",type = IdType.ASSIGN_ID)
-    private Long id;
+    @TableId(value = "id")
+    private Integer id;
 
     /**
      * 第三方接口ip 白名单
@@ -46,7 +46,7 @@ public class SysThirdSign extends Model<SysThirdSign> {
     /**
      * 创建人
      */
-    private Long createBy;
+    private Integer createBy;
 
     /**
      * 创建时间

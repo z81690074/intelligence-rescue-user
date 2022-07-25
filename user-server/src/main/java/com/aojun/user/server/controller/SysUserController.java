@@ -1,6 +1,8 @@
 package com.aojun.user.server.controller;
 
 import com.aojun.user.api.entity.SysUserRole;
+import com.aojun.user.api.form.PasswordForm;
+import com.aojun.user.api.request.UserRequest;
 import com.aojun.user.server.service.SysUserRoleService;
 import com.aojun.user.server.service.SysUserService;
 import com.aojun.user.api.entity.SysUser;
@@ -54,7 +56,7 @@ public class SysUserController {
      */
     @GetMapping("/info/{userId}")
     @ApiOperation("通过id查询单条记录")
-    public Result<SysUser> getById(@PathVariable("userId") Long userId) {
+    public Result<SysUser> getById(@PathVariable("userId") Integer userId) {
         return Result.ok(sysUserService.getUserInfoById(userId));
     }
 
@@ -67,20 +69,20 @@ public class SysUserController {
      */
     @PostMapping("/save")
     @ApiOperation("保存")
-    public Result save(@RequestBody SysUser sysUser) {
-        return sysUserService.saveUser(sysUser);
+    public Result save(@RequestBody UserRequest request) {
+        return sysUserService.saveUser(request);
     }
 
     /**
      * 修改记录
      *
-     * @param sysUser
+     * @param request
      * @return R
      */
     @PutMapping("/update")
     @ApiOperation("更新")
-    public Result update(@RequestBody SysUser sysUser) {
-        return sysUserService.updateByUserId(sysUser);
+    public Result update(@RequestBody UserRequest request) {
+        return sysUserService.updateByUserId(request);
     }
 
     /**
@@ -88,8 +90,8 @@ public class SysUserController {
      */
     @PutMapping("/updatePwd")
     @ApiOperation("个人密码修改")
-    public Result updatePwd(@RequestBody SysUser sysUser) {
-        return sysUserService.updatePwd(sysUser);
+    public Result updatePwd(@RequestBody PasswordForm passwordForm) {
+        return sysUserService.updatePwd(passwordForm);
     }
 
     /**
@@ -111,7 +113,7 @@ public class SysUserController {
      */
     @DeleteMapping("/removeById/{userId}")
     @ApiOperation("通过id删除")
-    public Result removeById(@PathVariable Long userId) {
+    public Result removeById(@PathVariable Integer userId) {
         return Result.ok(sysUserService.removeById(userId));
     }
 
@@ -120,9 +122,12 @@ public class SysUserController {
      */
     @GetMapping("/validateUsername")
     @ApiOperation("验证用户名是否唯一")
-    public boolean validateUsername(@RequestParam("username") String username) {
+    public Result validateUsername(@RequestParam("username") String username) {
         int count = sysUserService.count(new QueryWrapper<SysUser>().eq(StringUtils.isNotBlank(username), "username", username));
-        return count == 0;
+        if (count == 0){
+            return Result.ok("该用户名可用");
+        }
+        return Result.failed("该用户名不可用");
     }
 
     /**

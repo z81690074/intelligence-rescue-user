@@ -9,9 +9,6 @@ import org.apache.ibatis.annotations.Param;
 
 /**
  * 系统用户
- *
- * @author liu jian
- * @date 2020-05-26 13:03:22
  */
 @Mapper
 public interface SysUserMapper extends BaseMapper<SysUser> {
@@ -19,7 +16,7 @@ public interface SysUserMapper extends BaseMapper<SysUser> {
     /**
      * 获取用户详情
      */
-    SysUser getUserInfoById(@Param("userId") Long userId);
+    SysUser getUserInfoById(@Param("userId") Integer userId);
 
     Result setRegistrationId(SysUser sysUser);
 

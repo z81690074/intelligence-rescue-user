@@ -2,6 +2,8 @@ package com.aojun.user.server.service;
 
 import com.aojun.user.api.entity.SysUser;
 import com.aojun.common.base.util.Result;
+import com.aojun.user.api.form.PasswordForm;
+import com.aojun.user.api.request.UserRequest;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -24,21 +26,20 @@ public interface SysUserService extends IService<SysUser> {
      * @param userId
      * @return
      */
-    SysUser getUserInfoById(Long userId);
+    SysUser getUserInfoById(Integer userId);
 
     /**
      * 保存功能
      */
-    Result saveUser(SysUser sysUser);
+    Result saveUser(UserRequest request);
 
     /**
      * 更新用戶
      */
-    Result updateByUserId(SysUser sysUser);
+    Result updateByUserId(UserRequest request);
     /**
      *  个人密码修改
      */
-    Result updatePwd(SysUser sysUser);
+    Result updatePwd(PasswordForm passwordForm);
 
-    Result setRegistrationId(SysUser sysUser);
 }

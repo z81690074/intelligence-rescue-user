@@ -10,9 +10,6 @@ import lombok.EqualsAndHashCode;
 
 /**
  * 用户与角色对应关系
- *
- * @author liu jian
- * @date 2020-05-26 13:03:22
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
@@ -22,16 +19,16 @@ public class SysUserRole extends Model<SysUserRole> {
     /**
      * 主键id
      */
-    @TableId(value = "id",type = IdType.ASSIGN_ID)
-    private Long id;
+    @TableId(value = "id")
+    private Integer id;
 
     /**
      * 用户ID
      */
-    private Long userId;
+    private Integer userId;
     /**
      * 角色ID
      */
-    private Long roleId;
+    private Integer roleId;
 
 }

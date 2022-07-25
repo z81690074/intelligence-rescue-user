@@ -3,11 +3,12 @@ package com.aojun.user.server.service.impl;
 import cn.hutool.core.util.StrUtil;
 import com.aojun.common.base.constant.Constant;
 import com.aojun.common.redis.util.RedisUtils;
+import com.aojun.user.api.form.PasswordForm;
+import com.aojun.user.api.request.UserRequest;
 import com.aojun.user.server.mapper.SysRoleMapper;
 import com.aojun.user.server.service.SysUserRoleService;
 import com.aojun.user.api.entity.SysRole;
 import com.aojun.user.api.entity.SysUser;
-import com.aojun.user.api.entity.SysUserRole;
 import com.aojun.user.server.mapper.SysUserMapper;
 import com.aojun.user.server.service.SysRoleService;
 import com.aojun.user.server.service.SysUserService;
@@ -28,7 +29,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 
-import static com.aojun.common.base.util.UserRequestUtil.getBizId;
 import static com.aojun.common.base.util.UserRequestUtil.getUserId;
 
 
@@ -61,11 +61,8 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
      */
     @Override
     public IPage<SysUser> getSysUserPage(Map<String, Object> params) {
-        // 判断当前登录人角色，若是企业 biz 添加过滤条件
-        Long usrId = null;
-        if (getBizId() != null){
-            usrId = getUserId();
-        }
+        // 判断当前登录人角色，
+        Integer usrId = getUserId();
         IPage<SysUser> iPage = this.page(
                 new Query<SysUser>(params).getPage(),
                 new QueryWrapper<SysUser>()
@@ -80,11 +77,6 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
             iPage.getRecords().forEach(user -> {
                 user.setPassword(null);
                 user.setRoleList(getRoleList(user));
-                SysUser sysUser = sysUserMapper.getUserInfoById(user.getUserId());
-                if (sysUser != null) {
-                    user.setBizIds(sysUser.getBizIds());
-                    user.setBizNames(sysUser.getBizNames());
-                }
             });
         }
         return iPage;
@@ -93,8 +85,8 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 
     private List<SysRole> getRoleList(SysUser user) {
         List<SysRole> roleList = new ArrayList<>();
-        Set<Long> roleIdList = sysUserRoleService.queryRoleIdList(user.getUserId());
-        Iterator<Long> it = roleIdList.iterator();
+        Set<Integer> roleIdList = sysUserRoleService.queryRoleIdList(user.getUserId());
+        Iterator<Integer> it = roleIdList.iterator();
         while (it.hasNext()) {
             for (int i = 0; i < roleIdList.size(); i++) {
                 SysRole roleEntity = sysRoleService.getById(it.next());
@@ -107,19 +99,25 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     }
 
     @Override
-    public SysUser getUserInfoById(Long userId) {
+    public SysUser getUserInfoById(Integer userId) {
         SysUser user = sysUserMapper.selectById(userId);
         if (user != null) {
             // 获取用户数据权限
             user.setRoleList(getRoleList(user));
             return user;
         }
-        return user;
+        return null;
     }
 
     @Override
     @Transactional
-    public Result saveUser(SysUser sysUser) {
+    public Result saveUser(UserRequest request) {
+        SysUser sysUser = new SysUser();
+        sysUser.setUsername(request.getUsername());
+        sysUser.setSex(request.getSex());
+        sysUser.setMobile(request.getMobile());
+        sysUser.setRealname(request.getRealname());
+
         sysUser.setCreateBy(getUserId());
         sysUser.setCreateTime(new Date());
         sysUser.setUpdateBy(getUserId());
@@ -127,67 +125,69 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         sysUser.setStatus(Constant.TableStatus.ENABLE.getValue());
         sysUser.setDelFlag(Constant.TableDelFlag.NOTDEL.getValue());
         // 新增默认密码123456
-        if (StrUtil.isBlank(sysUser.getPassword())) {
+        if (StrUtil.isBlank(request.getPassword())) {
             sysUser.setPassword(ENCODER.encode(Constant.DEFAULT_PASSWORD));
             sysUser.setEnablePwd(Constant.DEFAULT_PASSWORD);
         } else {
-            sysUser.setEnablePwd(sysUser.getPassword());
-            sysUser.setPassword(ENCODER.encode(sysUser.getPassword()));
+            sysUser.setEnablePwd(request.getPassword());
+            sysUser.setPassword(ENCODER.encode(request.getPassword()));
         }
 
         // 1.保存用戶信息
         sysUserMapper.insert(sysUser);
         // 2.保存用户和角色关系
-        if (CollectionUtils.isNotEmpty(sysUser.getRoleIds())) {
-            sysUserRoleService.saveUserRoleIds(sysUser.getUserId(), sysUser.getRoleIds());
+        if (CollectionUtils.isNotEmpty(request.getRoleIds())) {
+            sysUserRoleService.saveUserRoleIds(sysUser.getUserId(), request.getRoleIds());
         }
         return Result.ok();
     }
 
     @Override
     @Transactional
-    public Result updateByUserId(SysUser sysUser) {
+    public Result updateByUserId(UserRequest request) {
+        SysUser sysUser = new SysUser();
+        sysUser.setUserId(request.getUserId());
+        sysUser.setUsername(request.getUsername());
+        sysUser.setSex(request.getSex());
+        sysUser.setMobile(request.getMobile());
+        sysUser.setRealname(request.getRealname());
+
         sysUser.setUpdateBy(getUserId());
         sysUser.setUpdateTime(new Date());
         // 1.更新用戶信息
-        if (StringUtils.isNotBlank(sysUser.getPassword())) {
+        if (StringUtils.isNotBlank(request.getPassword())) {
             // 管理员重置密码
-            sysUser.setEnablePwd(sysUser.getPassword());
-            sysUser.setPassword(ENCODER.encode(sysUser.getPassword()));
+            sysUser.setEnablePwd(request.getPassword());
+            sysUser.setPassword(ENCODER.encode(request.getPassword()));
         }
         sysUserMapper.update(sysUser,
                 new QueryWrapper<SysUser>()
                         .eq("user_id", sysUser.getUserId())
         );
         // 4.保存用户和角色关系
-        if (CollectionUtils.isNotEmpty(sysUser.getRoleIds())) {
-            sysUserRoleService.saveUserRoleIds(sysUser.getUserId(), sysUser.getRoleIds());
-//            redisUtils.delete(sysUser.getUsername());
+        if (CollectionUtils.isNotEmpty(request.getRoleIds())) {
+            sysUserRoleService.saveUserRoleIds(sysUser.getUserId(), request.getRoleIds());
+            redisUtils.delete(sysUser.getUsername());
         }
         return Result.ok();
     }
 
     @Override
-    public Result updatePwd(SysUser sysUser) {
-        SysUser user = sysUserMapper.selectById(sysUser.getUserId());
-        if (!ENCODER.matches(sysUser.getPassword(), user.getPassword())) {
+    public Result updatePwd(PasswordForm passwordForm) {
+        SysUser user = sysUserMapper.selectById(passwordForm.getUserId());
+        if (!ENCODER.matches(passwordForm.getPassword(), user.getPassword())) {
             return Result.failed("原密码输入不正确");
         }
         // 个人账户修改密码
-        sysUser.setEnablePwd(sysUser.getNewPassword());
-        sysUser.setPassword(ENCODER.encode(sysUser.getNewPassword()));
-        sysUser.setUpdateBy(getUserId());
-        sysUser.setUpdateTime(new Date());
-        sysUserMapper.update(sysUser,
+        user.setEnablePwd(passwordForm.getNewPassword());
+        user.setPassword(ENCODER.encode(passwordForm.getNewPassword()));
+        user.setUpdateBy(getUserId());
+        user.setUpdateTime(new Date());
+        sysUserMapper.update(user,
                 new QueryWrapper<SysUser>()
-                        .eq("user_id", sysUser.getUserId()));
+                        .eq("user_id", passwordForm.getUserId()));
         return Result.ok();
 
-    }
-
-    @Override
-    public Result setRegistrationId(SysUser sysUser) {
-        return sysUserMapper.setRegistrationId(sysUser);
     }
 
 }

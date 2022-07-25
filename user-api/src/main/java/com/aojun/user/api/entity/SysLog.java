@@ -14,9 +14,6 @@ import java.util.Date;
  * <p>
  * 日志表
  * </p>
- *
- * @author liujian
- * @since 2020-08-07
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
@@ -26,8 +23,8 @@ public class SysLog extends Model<SysLog> {
     /**
      * 编号
      */
-    @TableId(value = "id", type = IdType.ASSIGN_ID)
-    private Long id;
+    @TableId(value = "id")
+    private Integer id;
 
     /**
      * 日志类型

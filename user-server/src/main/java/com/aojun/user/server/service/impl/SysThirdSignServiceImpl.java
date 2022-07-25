@@ -2,7 +2,7 @@ package com.aojun.user.server.service.impl;
 
 import com.aojun.user.api.entity.SysThirdSign;
 import com.aojun.user.server.mapper.SysThirdSignMapper;
-import com.aojun.user.server.service.ISysThirdSignService;
+import com.aojun.user.server.service.SysThirdSignService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +12,6 @@ import org.springframework.stereotype.Service;
  * </p>
  */
 @Service
-public class SysThirdSignServiceImpl extends ServiceImpl<SysThirdSignMapper, SysThirdSign> implements ISysThirdSignService {
+public class SysThirdSignServiceImpl extends ServiceImpl<SysThirdSignMapper, SysThirdSign> implements SysThirdSignService {
 
 }

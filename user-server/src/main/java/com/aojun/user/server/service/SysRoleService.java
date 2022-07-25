@@ -33,7 +33,7 @@ public interface SysRoleService extends IService<SysRole> {
     /**
      * 获取角色详情
      */
-    Result getByRoleId(Long roleId);
+    Result getByRoleId(Integer roleId);
 
 
 }

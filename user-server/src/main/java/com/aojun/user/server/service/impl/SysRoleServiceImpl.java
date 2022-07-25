@@ -82,7 +82,7 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
     }
 
     @Override
-    public Result getByRoleId(Long roleId) {
+    public Result getByRoleId(Integer roleId) {
         SysRole sysRole = sysRoleMapper.selectById(roleId);
         if(CollectionUtils.isNotEmpty(sysRoleMenuMapper.getMenuIdsByRoleId(roleId))) {
             sysRole.setMenuIdList(sysRoleMenuMapper.getMenuIdsByRoleId(roleId));
